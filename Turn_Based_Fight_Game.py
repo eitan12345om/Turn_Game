@@ -2,20 +2,20 @@ import random
 import time
 
 def attacking(attack, health):
-	for hitpoints in range(attack):
-		if health > 0:
-			health -= 1
+	health = max(0, health - attack)
 	return health
 
 def healing(heal, health):
-	for hitpoints in range(heal):
-		if health < 100:
-			health += 1
+	health = min(MaxHealth, health + heal)
 	return health
 
 def Display_Menu(items):
 	for n in range(len(items)):
 		print(str(n+1) + '. ' + items[n])
+
+def PrintHealth():
+	print 'Your health: ' + str(Human_Health) + '     Computer health:', str(Computer_Health)
+	print
 
 menu = ["Moderate Attack (18-25). Will unlock Summon Gods after 3 consecutive turns",
 	"Heavy Attack (10-35) with (0-5) recoil",
@@ -42,21 +42,22 @@ menu3 = ["Moderate Attack (18-25). Will unlock Summon Gods after 3 consecutive t
 ]
 
 
-Human_Health = 100
-Computer_Health = 100
+MaxHealth = 200
+Human_Health = MaxHealth
+Computer_Health = MaxHealth
 moves = ['moderate', 'heal']
 moves2 = ['moderate', 'moderate', 'heal', 'heal', 'heal', 'heal', 'heal', 'heal', 'heal', 'heal']
 Blade_poisoned = False
 Gods = 0
 menu_displayed = 0
 
-
-print('Your health:', str(Human_Health) + '     ' + 'Computer health:', str(Computer_Health))
+print('\n')
+PrintHealth()
 while Human_Health > 0 and Computer_Health > 0:
 
 	Move = False
 	while Move == False:
-		print('\n' + 'Moves available:')
+		print 'Moves available:'
 		if Gods < 3:
 			if Blade_poisoned == False:
 				Display_Menu(menu)
@@ -72,12 +73,12 @@ while Human_Health > 0 and Computer_Health > 0:
 				Display_Menu(menu2)
 				menu_displayed = menu2
 
-		print('\n')
-		Selection = input("Select your move: ")
-		print('\n')
-		if not Selection.isnumeric() and Selection not in range(len(menu_displayed) + 1):
+		print
+		Selection = raw_input("Select your move: ")
+		print
+		if not Selection.isdigit() and Selection not in range(len(menu_displayed) + 1):
 			print("Please type in a number corresponding to a menu option!")
-			print('Your health:', str(Human_Health) + '     ' + 'Computer health:', str(Computer_Health) + '\n')
+			PrintHealth()
 		else:
 			Selection = int(Selection)
 			Move = True
@@ -87,11 +88,12 @@ while Human_Health > 0 and Computer_Health > 0:
 				Computer_Health = attacking(attack, Computer_Health)
 				if Blade_poisoned == True:
 					Computer_Health = attacking(5, Computer_Health)
-					print("You've dealt", str(attack), "damage (+5 poison damage), a total damage of:", str(attack + 5))
+					print "You've dealt " + str(attack), " damage (+5 poison damage), a total damage of:", str(attack + 5)
 				else:
-					print("You've dealt", str(attack), "damage")
+					print "You've dealt", str(attack), "damage"
 			else:
-				Gods = 0
+				if Gods < 3:
+					Gods = 0
 				if Selection == 2:
 					attack = random.randrange(10, 36)
 					recoil = random.randrange(0, 6)
@@ -99,17 +101,17 @@ while Human_Health > 0 and Computer_Health > 0:
 					Computer_Health = attacking(attack, Computer_Health)
 					if Blade_poisoned == True:
 						Computer_Health = attacking(5, Computer_Health)
-						print("You've dealt", str(attack), "damage (+5 poison damage), a total damage of:", str(attack +5))
+						print "You've dealt", str(attack), "damage (+5 poison damage), a total damage of:", str(attack +5)
 					else:
-						print("You've dealt", str(attack), "damage")
-					print("Your weapon recoils and hits you for:", str(recoil), "lifepoint(s)")
+						print "You've dealt", str(attack), "damage"
+					print "Your weapon recoils and hits you for:", str(recoil), "lifepoint(s)"
 				elif Selection == 3:
 					heal = random.randrange(18, 26)
 					Human_Health = healing(heal, Human_Health)
-					print("You've been healed", str(heal), 'life points!')
+					print "You've been healed", str(heal), 'life points!'
 				elif Blade_poisoned == False and Selection == 4:
 					Blade_poisoned = True
-					print("You've poisoned your blade!")
+					print "You've poisoned your blade!"
 				else:
 					if Gods == 3:
 						if (Selection == 5 and Blade_poisoned == False) or (Selection == 4 and Blade_poisoned == True):
@@ -126,10 +128,10 @@ while Human_Health > 0 and Computer_Health > 0:
 					else:
 						Move = False
 						print("Please type in a number corresponding to a menu option!")
-						print('Your health:', str(Human_Health) + '     ' + 'Computer health:', str(Computer_Health) + '\n')
+						PrintHealth()
 
-	if Computer_Health > 0 and Human_Health > 0:			
-		print('Your health:', str(Human_Health) + '     ' + 'Computer health:', str(Computer_Health) + '\n')			
+	if Computer_Health > 0 and Human_Health > 0:
+		PrintHealth()			
 	time.sleep(1)
 
 	if Computer_Health > 0:
@@ -144,16 +146,16 @@ while Human_Health > 0 and Computer_Health > 0:
 		if Computer_move == 'heal':
 			heal = random.randrange(18, 26)
 			Computer_Health = healing(heal, Computer_Health)
-			print("The Computer healed", str(heal), 'life points!')
+			print "The Computer healed", str(heal), 'life points!'
 		else:
 			if Computer_move == 'moderate':
 				attack = random.randrange(18, 26)
 			else:
 				attack = random.randrange(10, 31)
 			Human_Health = attacking(attack, Human_Health)
-			print("You've been dealt a blow of", str(attack))
+			print "You've been dealt a blow of", str(attack)
 
-	print('Your health:', str(Human_Health) + '     ' + 'Computer health:', str(Computer_Health))
+	PrintHealth()
 	time.sleep(2)
 
 if Computer_Health == Human_Health:
