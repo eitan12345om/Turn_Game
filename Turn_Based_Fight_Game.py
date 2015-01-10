@@ -112,7 +112,7 @@ while Human_Health > 0 and Computer_Health > 0:
 					print("You've poisoned your blade!")
 				else:
 					if Gods == 3:
-						if Selection == 5 and Blade_poisoned == False:
+						if (Selection == 5 and Blade_poisoned == False) or (Selection == 4 and Blade_poisoned == True):
 						Gods = 0
 						Who_is_hit = random.randrange(2)
 						if Who_is_hit = 0:
