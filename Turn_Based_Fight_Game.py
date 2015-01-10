@@ -60,22 +60,22 @@ while Human_Health > 0 and Computer_Health > 0:
 		if Gods < 3:
 			if Blade_poisoned == False:
 				Display_Menu(menu)
-				menu_displayed = 0
+				menu_displayed = menu
 			else:
 				Display_Menu(menu3)
-				menu_displayed = 3
+				menu_displayed = menu3
 		else:
 			if Blade_poisoned == False:
 				Display_Menu(menu1)
-				menu_displayed = 1
+				menu_displayed = menu1
 			else:
 				Display_Menu(menu2)
-				menu_displayed = 2
+				menu_displayed = menu2
 
 		print('\n')
 		Selection = input("Select your move: ")
 		print('\n')
-		if not Selection.isnumeric():
+		if not Selection.isnumeric() and Selection not in range(len(menu_displayed) + 1):
 			print("Please type in a number corresponding to a menu option!")
 			print('Your health:', str(Human_Health) + '     ' + 'Computer health:', str(Computer_Health) + '\n')
 		else:
@@ -87,7 +87,7 @@ while Human_Health > 0 and Computer_Health > 0:
 				Computer_Health = attacking(attack, Computer_Health)
 				if Blade_poisoned == True:
 					Computer_Health = attacking(5, Computer_Health)
-					print("You've dealt", str(attack), "damage (+5 poison damage), a total damage of:", str(attack +5))
+					print("You've dealt", str(attack), "damage (+5 poison damage), a total damage of:", str(attack + 5))
 				else:
 					print("You've dealt", str(attack), "damage")
 			else:
