@@ -14,7 +14,8 @@ def Display_Menu(items):
 		print(str(n+1) + '. ' + items[n])
 
 def PrintHealth():
-	print 'Your health: ' + str(Human_Health) + '     Computer health:', str(Computer_Health)
+	s = 'Your health: ' + str(Human_Health) + '     Computer health: ' + str(Computer_Health)
+	print(s)
 	print
 
 menu = ["Moderate Attack (18-25). Will unlock Summon Gods after 3 consecutive turns",
@@ -57,7 +58,7 @@ while Human_Health > 0 and Computer_Health > 0:
 
 	Move = False
 	while Move == False:
-		print 'Moves available:'
+		print('Moves available:')
 		if Gods < 3:
 			if Blade_poisoned == False:
 				Display_Menu(menu)
@@ -88,9 +89,11 @@ while Human_Health > 0 and Computer_Health > 0:
 				Computer_Health = attacking(attack, Computer_Health)
 				if Blade_poisoned == True:
 					Computer_Health = attacking(5, Computer_Health)
-					print "You've dealt " + str(attack), " damage (+5 poison damage), a total damage of:", str(attack + 5)
+					s = "You've dealt " + str(attack) + " damage (+5 poison damage), a total damage of: " + str(attack + 5)
+					print(s)
 				else:
-					print "You've dealt", str(attack), "damage"
+					s = "You've dealt" + str(attack) + " damage"
+					print(s)
 			else:
 				if Gods < 3:
 					Gods = 0
@@ -101,9 +104,11 @@ while Human_Health > 0 and Computer_Health > 0:
 					Computer_Health = attacking(attack, Computer_Health)
 					if Blade_poisoned == True:
 						Computer_Health = attacking(5, Computer_Health)
-						print "You've dealt", str(attack), "damage (+5 poison damage), a total damage of:", str(attack +5)
+						s = "You've dealt " +  str(attack) + " damage (+5 poison damage), a total damage of: " + str(attack +5)
+						print(s)
 					else:
-						print "You've dealt", str(attack), "damage"
+						s = "You've dealt " + str(attack) + " damage"
+						print(s)
 					print "Your weapon recoils and hits you for:", str(recoil), "lifepoint(s)"
 				elif Selection == 3:
 					heal = random.randrange(18, 26)
